@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Nunito", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    height: 30rem;
+    min-width: 30rem;
+}
+
+.container label {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.container input {
+    margin-bottom: 3rem;
+}
+
+.desc {
+    font-size: 2rem;
+    margin-bottom: 4rem;
+}
+
+.age {
+    font-size: 3rem;
+}
+
+.age > span {
+    font-weight: bold;
+}
+
+.error {
+    display: none;
+    font-size: 4rem;
+    color: red;
+}
+
