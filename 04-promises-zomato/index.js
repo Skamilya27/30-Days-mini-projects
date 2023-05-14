@@ -3,6 +3,8 @@ let isValetFound = false;
 let hasRestaurantSeenYourOrder = false;
 let restaurantTimer = null;
 let valetTimer = null;
+let valetDeliveryTimer = null;
+let isOrderDelivered = false;
 
 window.addEventListener("load", function () {
   document.getElementById("acceptOrder").addEventListener("click", function () {
@@ -12,6 +14,12 @@ window.addEventListener("load", function () {
   document.getElementById("findValet").addEventListener("click", function () {
     startSearchingForValets();
   });
+
+  document.getElementById('deliverOrder').addEventListener('click', function() {
+    setTimeout(() => {
+        isOrderDelivered = true;
+    }, 2000) 
+  })
 
   checkIfOrderAcceptedFromRestaurant()
     .then((isOrderAccepted) => {
@@ -61,8 +69,8 @@ function startPreparingOrder() {
     updateOrderStatus(),
     updateMapView(),
     checkIfValetAssigned(),
+    checkIfOrderDelivered()
 
-    // checkForOrderDelivery()
   ])
     .then((res) => {
       console.log(res);
@@ -80,7 +88,7 @@ function updateOrderStatus() {
   return new Promise((res, rej) => {
     setTimeout(() => {
       document.getElementById("currentStatus").innerText =
-        "Preparing your order";
+        isOrderDelivered ? 'Order delivered succesfully' : "Preparing your order";
       res("status updated");
     }, 1500);
   });
@@ -134,6 +142,19 @@ function checkIfValetAssigned() {
   });
 }
 
+function checkIfOrderDelivered() {
+    return new Promise((res, rej) => {
+        valetDeliveryTimer = setInterval(() => {
+          console.log("Is order delivered by valet");
+          if (isOrderDelivered) {
+            res("Order Delivered valet details");
+            updateOrderStatus();
+            clearTimeout(valetDeliveryTimer);
+          }
+        }, 1000);
+      });
+}
+
 function updateValetDetails() {
   if (isValetFound) {
     document.getElementById("finding-driver").classList.add("none");
@@ -141,3 +162,4 @@ function updateValetDetails() {
     document.getElementById("call").classList.remove("none");
   }
 }
+
